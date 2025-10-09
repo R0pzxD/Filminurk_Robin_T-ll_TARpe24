@@ -15,7 +15,13 @@ namespace Filminurk.Controllers
         {
             var result = _context.Movies.Select(x => new MoviesIndexViewModel
             {
-
+                ID = x.ID,
+                Title = x.Title,
+                FirstPublished = x.FirstPublished,
+                CurrentRating = x.CurrentRating,
+                OscarsWon = x.OscarsWon,
+                IMDbRating = x.IMDbRating,
+                
             });
             return View();
         }
