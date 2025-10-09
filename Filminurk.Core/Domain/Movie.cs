@@ -15,7 +15,7 @@ namespace Filminurk.Core.Domain
         public DateOnly FirstPublished { get; set; }
         public string Director { get; set; }
         public List<string>? Actors { get; set; }
-        public decimal? CurrentRating { get; set; }
+        public double? CurrentRating { get; set; }
         //public List<UserComment>? Reviews { get; set; }
         public int? OscarsWon { get; set; }
         public decimal? RottenTomatoes { get; set; }

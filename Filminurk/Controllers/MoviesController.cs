@@ -23,7 +23,7 @@ namespace Filminurk.Controllers
                 IMDbRating = x.IMDbRating,
                 
             });
-            return View();
+            return View(result);
         }
     }
 }
