@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Filminurk.Data\Filminurk.Data.csproj" />
+  </ItemGroup>
+
 </Project>
