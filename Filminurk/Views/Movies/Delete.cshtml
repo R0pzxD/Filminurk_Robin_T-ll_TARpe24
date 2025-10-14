@@ -1,0 +1,64 @@
+﻿@model Filminurk.Models.Movies.MoviesDeleteViewModel
+
+<h1>Kustuta Film</h1>
+
+<div>
+	<h4>Film</h4>
+	<hr />
+	<dl class="row">
+		<div class="form-group-now">
+			<label asp-for="ID" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.ID)
+		</div>
+	</dl>
+
+	<dl class="row">
+		<div class="form-group-now">
+			<label asp-for="Title" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.Title)
+		</div>
+	</dl>
+
+	<dl class="row">
+		<div class="form-group-now">
+			<label asp-for="Description" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.Description)
+		</div>
+	</dl>
+
+	<dl class="row">
+		<div class="form-group-now">
+			<label asp-for="FirstPublished" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.FirstPublished)
+		</div>
+	</dl>
+
+	<dl class="row">
+		<div class="form-group-now">
+			<label asp-for="Director" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.Director)
+		</div>
+	</dl>
+
+	<dl class="row">
+		<div class="form-group-now">
+			<label asp-for="CurrentRating" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.CurrentRating)
+		</div>
+	</dl>
+
+	<dl class="row">
+		<div class="form-group-now">
+			<label asp-for="EntryCreatedAt" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.EntryCreatedAt)
+		</div>
+	</dl>
+
+	<dl class="row">
+		<div class="form-group-now">
+			<label asp-for="EntryModifyAt" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.EntryModifyAt)
+		</div>
+	</dl>
+</div>
+  
