@@ -2,18 +2,24 @@
 using Filminurk.Data;
 using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Filminurk.Controllers
 {
     public class MoviesController : Controller
     {
         private readonly FilminurkTARpe24Context _context;
-        public MoviesController (FilminurkTARpe24Context context)
+        public MoviesController 
+            (
+            FilminurkTARpe24Context context,
+            )
         {
             _context = context;
+            _movieServices = movieServices;
         }
         public IActionResult Index()
         {
+
             var result = _context.Movies.Select(x => new MoviesIndexViewModel
             {
                 ID = x.ID,
@@ -52,12 +58,23 @@ namespace Filminurk.Controllers
 
 
             };
-            var result = await _context.Create(dto);
+            var result = await _movieServices.Create(dto);
             if (result == null)
             {
                 return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            return NotFound();
+        }
+        [HttpGet]
+        public async Task<IActionResult>Delete(Guid id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var result = await _context.Movies
+                .FirstOrDefaultAsync(m => m.ID == id);
+
         }
     }
 }
