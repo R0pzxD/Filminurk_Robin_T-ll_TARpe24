@@ -1,4 +1,6 @@
-﻿using Filminurk.Core.Dto;
+﻿using Filminurk.ApplicationServices.Services;
+using Filminurk.Core.Dto;
+using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +11,11 @@ namespace Filminurk.Controllers
     public class MoviesController : Controller
     {
         private readonly FilminurkTARpe24Context _context;
+        private readonly IMovieServices _movieServices;
         public MoviesController 
             (
             FilminurkTARpe24Context context,
+            IMovieServices movieServices
             )
         {
             _context = context;
@@ -74,7 +78,7 @@ namespace Filminurk.Controllers
             }
             var result = await _context.Movies
                 .FirstOrDefaultAsync(m => m.ID == id);
-
+            return View(result);
         }
     }
 }
