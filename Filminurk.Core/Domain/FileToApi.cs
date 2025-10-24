@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Filminurk.Core.Domain
 {
-    internal class FileToApi
+    public class FileToApi
+
     {
+        public Guid ImageID { get; set; }
+        public string? ExistingFilePath { get; set; }
+        public Guid? MovieID { get; set; }
+   
+        public bool? isPoster { get; set; }
     }
 }
