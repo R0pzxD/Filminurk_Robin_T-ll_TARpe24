@@ -123,40 +123,40 @@ namespace Filminurk.Controllers
             return View("CreateUpdate", vm);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Update(Models.MoviesCreateUpdateViewModel vm)
-        {
-            var dto = new MoviesDTO()
-            {
-                ID = vm.ID,
-                Title = vm.Title,
-                Description = vm.Description,
-                FirstPublished = vm.FirstPublished,
-                CurrentRating = vm.CurrentRating,
-                OscarsWon = vm.OscarsWon,
-                RottenTomatoes = vm.RottenTomatoes,
-                IMDbRating = vm.IMDbRating,
-                EntryCreatedAt = vm.EntryCreatedAt,
-                EntryModifyAt = vm.EntryModifyAt,
-                Director = vm.Director,
-                Actors = vm.Actors,
-                Files = vm.Files,
-                FilesToApi = vm.Images
-                .Select(x => new FileToApiDTO
-                {
-                    ImageID = x.ImageID,
-                    MovieID = x.MovieID,
-                    FilePath = x.FilePath
-                }).ToArray()
-            };
-            var result = await _movieServices.Update(dto);
+        //[HttpPost]
+        //public async Task<IActionResult> Update(Models.MoviesCreateUpdateViewModel vm)
+        //{
+        //    var dto = new MoviesDTO()
+        //    {
+        //        ID = vm.ID,
+        //        Title = vm.Title,
+        //        Description = vm.Description,
+        //        FirstPublished = vm.FirstPublished,
+        //        CurrentRating = vm.CurrentRating,
+        //        OscarsWon = vm.OscarsWon,
+        //        RottenTomatoes = vm.RottenTomatoes,
+        //        IMDbRating = vm.IMDbRating,
+        //        EntryCreatedAt = vm.EntryCreatedAt,
+        //        EntryModifyAt = vm.EntryModifyAt,
+        //        Director = vm.Director,
+        //        Actors = vm.Actors,
+        //        Files = vm.Files,
+        //        FilesToApi = vm.Images
+        //        .Select(x => new FileToApiDTO
+        //        {
+        //            ImageID = x.ImageID,
+        //            MovieID = x.MovieID,
+        //            FilePath = x.FilePath
+        //        }).ToArray()
+        //    };
+        //    var result = null; /*await _movieServices.Update(dto);*/
 
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return RedirectToAction(nameof(Index));
-        }
+        //    if (result == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return RedirectToAction(nameof(Index));
+        //}
 
 
         [HttpGet]
@@ -232,17 +232,17 @@ namespace Filminurk.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteConfirmation(Guid id)
-        {
-            var movie = await _movieServices.Delete(id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-            return RedirectToAction("Index");
+        //[HttpPost]
+        //public async Task<IActionResult> DeleteConfirmation(Guid id)
+        //{
+        //    var movie = await _movieServices.Delete(id);
+        //    if (movie == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return RedirectToAction("Index");
 
-        }
+        //}
         private async Task<ImageViewModel[]> FileFormDatabase(Guid id)
         {
             return await _context.FilesToApi
