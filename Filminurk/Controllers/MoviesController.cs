@@ -18,8 +18,7 @@ namespace Filminurk.Controllers
         public MoviesController 
             (
             FilminurkTARpe24Context context,
-            IMovieServices movieServices
-,
+            IMovieServices movieServices,
             IFilesServices filesServices
             )
         {
@@ -49,7 +48,7 @@ namespace Filminurk.Controllers
             return View("Create", result);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(MoviesCreateViewModel vm)
+        public async Task<IActionResult> Create(Models.Movies.MoviesCreateUpdateViewModel vm)
         {
             var dto = new MoviesDTO()
             {
@@ -80,9 +79,13 @@ namespace Filminurk.Controllers
             var result = await _movieServices.Create(dto);
             if (result == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            return NotFound();
+            if (ModelState.IsValid )
+            {
+                return NotFound();
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -99,9 +102,9 @@ namespace Filminurk.Controllers
                 {
                     FilePath = y.ExistingFilePath,
                     ImageID = id
-                }).ToListAsync();
+                }).ToArrayAsync();
 
-            var vm = new MoviesCreateViewModel()
+            var vm = new Models.Movies.MoviesCreateUpdateViewModel()
             {
                 ID = movie.ID,
                 Title = movie.Title,
@@ -115,26 +118,143 @@ namespace Filminurk.Controllers
                 IMDbRating = movie.IMDbRating,
                 EntryCreatedAt = movie.EntryCreatedAt,
                 EntryModifyAt = movie.EntryModifiedAt,
-                Images = images
-
-
             };
+            vm.Images.AddRange(images);
             return View("CreateUpdate", vm);
         }
-        
 
-
-        [HttpGet]
-        public async Task<IActionResult>Delete(Guid id)
+        [HttpPost]
+        public async Task<IActionResult> Update(Models.MoviesCreateUpdateViewModel vm)
         {
-            if(id == null)
+            var dto = new MoviesDTO()
+            {
+                ID = vm.ID,
+                Title = vm.Title,
+                Description = vm.Description,
+                FirstPublished = vm.FirstPublished,
+                CurrentRating = vm.CurrentRating,
+                OscarsWon = vm.OscarsWon,
+                RottenTomatoes = vm.RottenTomatoes,
+                IMDbRating = vm.IMDbRating,
+                EntryCreatedAt = vm.EntryCreatedAt,
+                EntryModifyAt = vm.EntryModifyAt,
+                Director = vm.Director,
+                Actors = vm.Actors,
+                Files = vm.Files,
+                FilesToApi = vm.Images
+                .Select(x => new FileToApiDTO
+                {
+                    ImageID = x.ImageID,
+                    MovieID = x.MovieID,
+                    FilePath = x.FilePath
+                }).ToArray()
+            };
+            var result = await _movieServices.Update(dto);
+
+            if (result == null)
             {
                 return NotFound();
             }
-            var result = await _context.Movies
-                .FirstOrDefaultAsync(m => m.ID == id);
-            return View(result);
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var movie = await _movieServices.DetailsAsync(id);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            ImageViewModel[] images = await FileFromDatabase(id);
+
+            var vm = new MoviesDetailsViewModel();
+
+            vm.ID = movie.ID;
+
+            vm.EntryModifyAt = movie.EntryModifiedAt;
+            vm.Director = movie.Director;
+            vm.Actors = movie.Actors;
+            vm.Images.AddRange(images);
+            
+            return View(vm);
+        }
+
+
+        private async Task<ImageViewModel[]> FileFromDatabase(Guid id)
+        {
+            return await _context.FilesToApi
+                .Where(x => x.MovieID == id)
+                .Select(y => new ImageViewModel { 
+                    ImageID = y.ImageID,
+                    MovieID = y.MovieID,
+                    isPoster = y.isPoster,
+                    FilePath = y.ExistingFilePath
+                }).ToArrayAsync();
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var movie = await _movieServices.DetailsAsync(id);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            var images = await _context.FilesToApi
+                .Where(x => x.MovieID == id)
+                .Select(y => new ImageViewModel
+                {
+                    FilePath = y.ExistingFilePath,
+                    ImageID = y.ImageID,
+                }).ToArrayAsync();
+            var vm = new MoviesDeleteViewModel();
+            vm.ID = vm.ID;
+                vm.Title = vm.Title;
+            vm.Description = vm.Description;
+            vm.FirstPublished = vm.FirstPublished;
+            vm.CurrentRating = vm.CurrentRating;
+            vm.OscarsWon = vm.OscarsWon;
+            vm.RottenTomatoes = vm.RottenTomatoes;
+            vm.IMDbRating = vm.IMDbRating;
+            vm.EntryCreatedAt = vm.EntryCreatedAt;
+            vm.EntryModifyAt = vm.EntryModifyAt;
+                vm.Director = vm.Director;
+            vm.Actors = vm.Actors;
+            vm.Images.AddRange(images);
+
+            return View(vm);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var movie = await _movieServices.Delete(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index");
+
+        }
+        private async Task<ImageViewModel[]> FileFormDatabase(Guid id)
+        {
+            return await _context.FilesToApi
+               .Where(x => x.MovieID == id)
+               .Select(y => new ImageViewModel
+               {
+                   ImageID = y.ImageID,
+                   MovieID = y.MovieID,
+                   isPoster = y.isPoster,
+                   FilePath = y.ExistingFilePath
+               }).ToArrayAsync();
         }
     }
-}
+    }
 
