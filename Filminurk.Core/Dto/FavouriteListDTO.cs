@@ -1,9 +1,17 @@
-﻿using Filminurk.Core.Domain;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Filminurk.Core.Domain;
+using Microsoft.AspNetCore.Http;
 
-namespace Filminurk.Models.FavouriteLists
+namespace Filminurk.Core.Dto
 {
-    public class FavouriteListsIndexViewModel
+    public class FavouriteListDTO
     {
+        [Key]
         public Guid FavouriteListID { get; set; }
         public string ListsBelongsToUser { get; set; }
         public bool IsMovieOrActor { get; set; }
@@ -15,6 +23,5 @@ namespace Filminurk.Models.FavouriteLists
         public DateTime? ListModifiedAt { get; set; }
         public DateTime? ListDeletedAt { get; set; }
         public bool IsReported { get; set; } = false;
-        public List<FavouriteListIndexViewModel> Images { get; set; } = new List<FavouriteListIndexViewModel>();
     }
 }
