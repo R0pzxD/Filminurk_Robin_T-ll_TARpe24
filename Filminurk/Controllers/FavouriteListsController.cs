@@ -45,7 +45,7 @@ namespace Filminurk.Controllers
 
 
                 }
-                
+
                 );
 
             return View(resultingLists);
@@ -74,7 +74,7 @@ namespace Filminurk.Controllers
             List<MoviesIndexViewModel> movies)
         {
             List<Guid> tempParse = new();
-            foreach(var stringID in userHasSelected)
+            foreach (var stringID in userHasSelected)
             {
                 tempParse.Add(Guid.Parse(stringID));
             }
@@ -86,18 +86,25 @@ namespace Filminurk.Controllers
             newListDto.ListCreatedAt = DateTime.UtcNow;
             newListDto.ListsBelongsToUser = "00000000-0000-0000-000000000001";
             newListDto.ListDeletedAt = vm.ListDeletedAt;
-            List<Guid> convertedIDs = new List<Guid>();
-            if(newListDto.ListOfMovies != null)
-            {
-                convertedIDs = MovieToId(newListDto.ListOfMovies);
-            }
+            newListDto.ListOfMovies = vm.ListOfMovies;
 
-            var newList = await _favouriteListsServices.Create(newListDto, convertedIDs);
-            if(newList != null)
+            foreach(var movieId in tempParse)
+            {
+                var thismovie = _context.Movies.Where(tm => tm.ID == movieId).ToList().Take(1);
+                newListDto.ListOfMovies.Add((Movie)thismovie);
+            }
+            //List<Guid> convertedIDs = new List<Guid>();
+            //if (newListDto.ListOfMovies != null)
+            //{
+            //    convertedIDs = MovieToId(newListDto.ListOfMovies);
+            //}
+
+            var newList = await _favouriteListsServices.Create(newListDto /*, convertedIDs*/);
+            if (newList != null)
             {
                 return BadRequest();
             }
-            return RedirectToAction("Index", vm); 
+            return RedirectToAction("Index", vm);
         }
         private List<Guid> MovieToId(List<Movie> listOfMovies)
         {
@@ -107,5 +114,6 @@ namespace Filminurk.Controllers
                 result.Add(movie.ID);
             }
             return result;
+        }
     }
 }
