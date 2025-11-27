@@ -37,12 +37,12 @@
 		}
 		else{
 
-			@foreach(var movie in ViewBag.allmovies)
+			@foreach(var movie in allMoviesTickboxes)
 			{
 				<tr>
 					<td>@movie.Title</td>
 					<td>@movie.FirstPublished</td>
-					<td>@movie.MovieGenre</td>
+					
 					<td>
 						@if(movie.ID.HasValue)
 						{
@@ -51,7 +51,7 @@
 							name="userHasSelected"
 							value="@movie.ID"
 							id="checkbox-@movie.ID"
-							@if(userHasSelected.Contains(movie.ID.ToString))
+							@if(userHasSelected.Contains(movie.ID.ToString()))
 							{
 								@:checked
 							}
@@ -59,6 +59,7 @@
 						}
 						else
 						{
+							
 							<input type="checkbox" name="userHasSelected" value="@movie.ID" id="checkbox-@movie.ID" />
 						}
 					</td>

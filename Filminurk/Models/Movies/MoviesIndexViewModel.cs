@@ -2,7 +2,7 @@
 {
     public class MoviesIndexViewModel
     {
-        public Guid ID { get; set; }
+        public Guid? ID { get; set; }
         public string Title { get; set; }
         
         public DateOnly FirstPublished { get; set; }
