@@ -15,6 +15,6 @@ namespace Filminurk.Models.FavouriteLists
         public DateTime? ListModifiedAt { get; set; }
         public DateTime? ListDeletedAt { get; set; }
         public bool IsReported { get; set; } = false;
-        public List<FavouriteListIndexViewModel> Images { get; set; } = new List<FavouriteListIndexViewModel>();
+        public List<FavouriteListIndexImageViewModel> Images { get; set; } = new List<FavouriteListIndexImageViewModel>();
     }
 }

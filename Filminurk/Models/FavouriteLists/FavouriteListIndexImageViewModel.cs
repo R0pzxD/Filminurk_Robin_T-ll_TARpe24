@@ -1,6 +1,6 @@
 ﻿namespace Filminurk.Models.FavouriteLists
 {
-    public class FavouriteListIndexViewModel
+    public class FavouriteListIndexImageViewModel
     {
         public Guid ImageID { get; set; }
         public string ImageTitle { get; set; }
