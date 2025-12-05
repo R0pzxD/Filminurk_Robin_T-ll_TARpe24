@@ -10,10 +10,12 @@
 	}
 	<table>
 		<tr>@Model.ListName</tr>
-		<tr><partial name="_ImageIndex" model="@Model.Images"></partial></tr>
+		<tr>@* <partial name="_ImageIndex" model="@Model.Images"> *@</partial></tr>
+		<tr>@Model.IsPrivate</tr>
 	</table>
 </div>
 <div>
+	<form method="post">
 	<table class="table">
 
 	
@@ -58,5 +60,5 @@
 
 	</div>
 	
-		
+	</form>
 </div>

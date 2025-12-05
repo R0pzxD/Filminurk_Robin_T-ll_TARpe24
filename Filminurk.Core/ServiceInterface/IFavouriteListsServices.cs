@@ -12,5 +12,6 @@ namespace Filminurk.Core.ServiceInterface
     {
         public Task<FavouriteList> DetailsAsync(Guid id);
         Task<FavouriteList> Create(FavouriteListDTO dto/*, List<Movie> movies*/);
+        Task<FavouriteList> Update(FavouriteListDTO updatedList);
     }
 }
