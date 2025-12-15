@@ -2,6 +2,7 @@ using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Filminurk.ApplicationServices.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddScoped<IFilesServices, FileServices>();
 builder.Services.AddScoped<IFavouriteListsServices, FavouriteListsServices>();
 builder.Services.AddDbContext<FilminurkTARpe24Context>(options => options.UseSqlServer
 (builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IAccountServices, AccountServices>();
 
 var app = builder.Build();
 
