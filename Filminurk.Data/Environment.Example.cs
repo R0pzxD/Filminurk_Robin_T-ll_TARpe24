@@ -8,5 +8,8 @@ namespace Filminurk.Data
 {
     class Environment
     {
+        public static string smtpaddress = "";
+        public static string gmailpassword = "";
+        public static string gmailusername = "";
     }
 }
