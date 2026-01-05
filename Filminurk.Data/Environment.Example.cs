@@ -11,5 +11,6 @@ namespace Filminurk.Data
         public static string smtpaddress = "";
         public static string gmailpassword = "";
         public static string gmailusername = "";
+        public static string accuweather = "";
     }
 }
