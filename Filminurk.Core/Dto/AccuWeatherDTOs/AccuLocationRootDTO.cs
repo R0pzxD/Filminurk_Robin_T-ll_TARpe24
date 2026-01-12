@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace Filminurk.Core.Dto.AccuWeatherDTOs
 {
     public class AccuLocationRootDTO
+
     {
+
     }
 }
